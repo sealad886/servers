@@ -3,7 +3,7 @@ name = "sequentialthinking"
 version = "0.1.0"
 description = "MCP server for sequential thinking and problem solving. Adapted from the identically named project by Anthropic, PBC (https://anthropic.com)."
 authors = [{ name = "Andrew Cox", email = "dev@andrewcox.doctor" }]
-license = { file = "LICENSE" }
+license = { text = "MIT" }
 readme = "README.md"
 requires-python = ">=3.10"
 keywords = ["mcp", "fastapi", "sequential-thinking"]
@@ -14,9 +14,15 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
 ]
+dependencies = [
+    "fastapi==0.95.1",
+    "uvicorn==0.22.0",
+    "pydantic==1.10.7",
+    "pychalk @ git+https://github.com/anthonyalmarza/chalk.git@0f562c4",
+]
 
 [project.scripts]
-sequentialthinking = "sequentialthinking:uvicorn"
+sequentialthinking = "sequentialthinking:main"
 
 [project.urls]
 Homepage = "https://modelcontextprotocol.io"
@@ -25,3 +31,15 @@ Repository = "https://github.com/modelcontextprotocol/servers"
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.uv]
+dev-dependencies = [
+    "pyright>=1.1.389",
+    "ruff>=0.7.3",
+    "pytest>=7.3.1",
+    "pytest-asyncio>=0.21.0",
+    "httpx>=0.24.1",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

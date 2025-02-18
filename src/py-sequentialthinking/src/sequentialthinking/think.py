@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
 from typing import Dict, List, Optional
+import argparse
+import asyncio
+from fastapi import FastAPI, Request
+from pydantic import BaseModel
+import uvicorn
 import json
 
 # Fixed chalk import for ESM
 import chalk
 
-from fastapi import FastAPI, Request
-from pydantic import BaseModel
-import uvicorn
 
 class ThoughtData(BaseModel):
     thought: str
@@ -217,3 +219,20 @@ async def list_tools():
 async def call_sequential_thinking(request: Request):
     data = await request.json()
     return thinking_server.process_thought(data)
+
+def main():
+    """MCP Sequential Thinking Server: enable a model to think through a problem logically"""
+
+    parser = argparse.ArgumentParser(
+        description="give a model the ability to handle time queries and timezone conversions"
+    )
+    parser.add_argument("-p", "--port",
+                        type=str,
+                        help="Port to serve on",
+                        default=6201)
+
+    args = parser.parse_args()
+    uvicorn.run(app, host="0.0.0.0", port=args.port)
+
+if __name__ == "__main__":
+    main()

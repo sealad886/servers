@@ -40,27 +40,67 @@ The Sequential Thinking tool is designed for:
 
 ## Installation
 
-Install the package using pip:
-
 ```bash
-pip install sequentialthinking
-```
+# Create and activate a virtual environment (recommended)
+python -m venv .venv
+source .venv/bin/activate  # On Windows, use `.venv\Scripts\activate`
 
-Or using uv:
-
-```bash
-uv add sequentialthinking
+# Install dependencies
+uv pip install -e .
 ```
 
 ## Running the Server
 
-Run the server using Python's module execution:
-
 ```bash
-python -m sequentialthinking
+# Using uvicorn directly
+uvicorn sequentialthinking:app --host 0.0.0.0 --port 6201
+
+# Or using the installed script
+sequentialthinking
 ```
 
-This will start the FastAPI server on port 6201.
+## Running Tests
+
+The project uses pytest for testing. To run the tests:
+
+```bash
+# Install test dependencies
+uv pip install -e ".[dev]"
+
+# Run all tests
+pytest
+
+# Run specific test categories
+pytest tests/unit/          # Run unit tests only
+pytest tests/integration/   # Run integration tests only
+pytest tests/e2e/          # Run end-to-end tests only
+
+# Run tests with coverage report
+pytest --cov=sequentialthinking
+
+# Run tests in parallel
+pytest -n auto
+```
+
+### Test Structure
+
+The test suite is organized into three categories:
+
+1. **Unit Tests** (`tests/unit/`)
+   - `test_models.py`: Tests for the ThoughtData model
+   - `test_server.py`: Tests for the SequentialThinkingServer class
+
+2. **Integration Tests** (`tests/integration/`)
+   - `test_api.py`: Tests for the FastAPI endpoints
+
+3. **End-to-End Tests** (`tests/e2e/`)
+   - `test_flows.py`: Tests for complete thought flows
+
+## API Documentation
+
+Once the server is running, you can access the API documentation at:
+- Swagger UI: http://localhost:6201/docs
+- ReDoc: http://localhost:6201/redoc
 
 ## Configuration
 
